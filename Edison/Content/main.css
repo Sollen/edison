@@ -1,0 +1,11 @@
+﻿.error {
+    color: red;
+}
+
+.grid {
+    display: grid;
+}
+
+.psycontainer {
+    grid-template-columns: repeat(3, 1fr);
+}

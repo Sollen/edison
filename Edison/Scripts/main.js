@@ -14,12 +14,11 @@
 
 function renderPsychics(psy) {
 
-    var container = $('<div>', { class: 'psycontainer' });
-    container.append($('</br>'));
+    var container = $('<div>', { class: 'psycontainer grid' });
     container.append($('<div>', { class: 'headerpsy', text: psy.Name }));
     container.append($('<div>', { class: 'confidencepsy', text: 'Доверие: ' + psy.Confidence }));
-    container.append($('<p>', {  text: 'Предсказания экстрасенса:' }));
-    container.append($('<div>', { class: 'predaction', id:"predactionpsy"+psy.Id}));
+    
+    container.append($('<div>', { class: 'predaction', id: "predactionpsy" + psy.Id, text: 'Предсказания экстрасенса:'}));
     container.appendTo("#psyarray");
     psy.Prediction.forEach(function (item) {
         var psyid = "#predactionpsy" + psy.Id;
