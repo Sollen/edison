@@ -46,11 +46,12 @@ function testPsy() {
     }).done(function (data) {
         $("#error").text('');
         $("#inputnumber").val('00');
-        if (data != 0) {
-            $("#error").text(data);
-        } else {
+        if (data === 0) {
             getPsychics();
             getPlayer();
+        } else {
+            $("#error").text(data);
+            
         }
         
     });

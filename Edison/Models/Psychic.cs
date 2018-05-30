@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
 using System.Threading;
-using System.Web;
 
 namespace Edison.Models
 {
@@ -17,7 +14,7 @@ namespace Edison.Models
             Prediction = new List<int>();
         }
 
-        private Random _rand;
+        
         public int Id { get; set; }
         public string Name { get; set; }
         public int Confidence { get; set; }
