@@ -1,18 +1,17 @@
 ﻿@model List<Edison.Models.Psychic>
 
-@{
-    ViewBag.Title = "IndexNew";
-}
 
-<h2>Index</h2>
+
+<h2>Проверка экстрасенсов</h2>
 
 
 <div id="psyarray" class="grid"></div>
-
+<br />
 <div id="playerarray">
     <p>Введите число: </p>
-    <input id ="inputnumber" type="text" name="number" value="00" />
-    <button onclick ="testPsy()"> Проверить</button>
+    <input id="inputnumber" type="number" name="number" min="10" , max="99" />
+    <button onclick="testPsy()"> Проверить</button>
+    <div id="error"></div>
     <div id="playernumbers"></div>
 </div>
 
