@@ -6,21 +6,23 @@ namespace Edison.Controllers
 {
     public class HomeController : Controller
     {
-        
-        
+        private readonly SessionController _session;
+
+
         public HomeController()
         {
-            System.Web.HttpContext.Current.Session["Psychics"] = 
-                System.Web.HttpContext.Current.Session["Psychics"] ?? new List<Psychic>()
-                        {
-                            new Psychic(0, "Psychic 0"),
-                            new Psychic(1, "Psychic 1"),
-                            new Psychic(2, "Psychic 2"),
+            _session = new SessionController();
+            _session.SetSessionContent("Psychics", _session.GetSessionContent("Psychics") ?? 
+                    new List<Psychic>()
+                    {
+                        new Psychic(0, "Psychic 0"),
+                        new Psychic(1, "Psychic 1"),
+                        new Psychic(2, "Psychic 2"),
 
-                        };
+                    });
 
-            System.Web.HttpContext.Current.Session["PlayerNumber"] =
-                System.Web.HttpContext.Current.Session["PlayerNumber"] ?? new List<int>();
+            _session.SetSessionContent("PlayerNumber", _session.GetSessionContent("PlayerNumber") ?? new List<int>());
+           
 
 
 
@@ -31,26 +33,26 @@ namespace Edison.Controllers
 
         public ActionResult Index()
         {
-            return View((List<Psychic>)System.Web.HttpContext.Current.Session["Psychics"]);
+            return View(_session.GetSessionContent("Psychics") as List<Psychic>);
         }
 
         public JsonResult AddConfidence(int idPsychic)
         {
-            List<Psychic> psys = (List<Psychic>)System.Web.HttpContext.Current.Session["Psychics"];
+            List<Psychic> psys = _session.GetSessionContent("Psychics") as List<Psychic>;
             psys.Find(psy => psy.Id == idPsychic).Confidence++;
-            Session["Psychics"] = psys;
+            _session.SetSessionContent("Psychics", psys);
             return Json(200, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetPsychics()
         {
-            var psys = (List<Psychic>) System.Web.HttpContext.Current.Session["Psychics"];
+            var psys = _session.GetSessionContent("Psychics") as List<Psychic>;
             return Json(psys, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetPlayer()
         {
-            return Json((List<int>)System.Web.HttpContext.Current.Session["PlayerNumber"], JsonRequestBehavior.AllowGet);
+            return Json(_session.GetSessionContent("PlayerNumber") as List<int>, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult TestPsychics(int? number)
@@ -60,8 +62,8 @@ namespace Edison.Controllers
             {
                 return Json("Введите двузначное число", JsonRequestBehavior.AllowGet);
             }
-            var playerNumber = (List<int>) System.Web.HttpContext.Current.Session["PlayerNumber"];
-            var psychics = (List<Psychic>) System.Web.HttpContext.Current.Session["Psychics"];
+            var playerNumber = _session.GetSessionContent("PlayerNumber") as List<int> ?? new List<int>();
+            var psychics = _session.GetSessionContent("Psychics") as List<Psychic> ?? new List<Psychic>();
 
             playerNumber.Add(numb);
             foreach (var psy in psychics)
@@ -69,7 +71,7 @@ namespace Edison.Controllers
                 psy.GetPrediction(numb);
             }
 
-            System.Web.HttpContext.Current.Session["Psychics"] = psychics;
+            _session.SetSessionContent("Psychics", psychics);
             return Json(0, JsonRequestBehavior.AllowGet);
         }
     }
