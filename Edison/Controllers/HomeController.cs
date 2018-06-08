@@ -68,7 +68,8 @@ namespace Edison.Controllers
             playerNumber.Add(numb);
             foreach (var psy in psychics)
             {
-                psy.GetPrediction(numb);
+
+                psy.Confidence = numb == psy.GetPrediction() ? ++psy.Confidence : --psy.Confidence; ;
             }
 
             _session.SetSessionContent("Psychics", psychics);

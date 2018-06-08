@@ -20,13 +20,13 @@ namespace Edison.Models
         public int Confidence { get; set; }
         public List<int> Prediction { get; set; }
 
-        public void GetPrediction(int number)
+        public int GetPrediction()
         {
             Thread.Sleep(1);
             Random rnd = new Random(DateTime.Now.Millisecond);
             int prediction = rnd.Next(10, 99);
-            Confidence = number == prediction ? ++Confidence: --Confidence;
             Prediction.Add(prediction);
+            return prediction;
         }
     }
 
